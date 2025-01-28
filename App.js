@@ -7,18 +7,25 @@ import {
   Text,
   TextInput,
   View,
+  FlatList,
 } from "react-native";
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState("");
   const [goals, setGoals] = useState([]);
+
   function inputGoalHandler(enteredText) {
     setEnteredGoal(enteredText);
   }
+
   function addGoalHandler() {
-    setGoals([...goals, enteredGoal]);
+    setGoals((currentGoals) => [
+      ...currentGoals,
+      { text: enteredGoal, id: Math.random().toString() },
+    ]);
     setEnteredGoal("");
   }
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
@@ -27,17 +34,24 @@ export default function App() {
           placeholder="Enter Goal"
           onChangeText={inputGoalHandler}
         />
-        <Button title="Add Goal" onPress={addGoalHandler} />
+        <Button title="Add Goals" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalContainer}>
-        <ScrollView>
-          {goals.map((goal) => (
-            <View key={goal} style={styles.goalListView}>
-              <Text style={styles.goalText}>{goal}</Text>
-            </View>
-          ))}
-          ;
-        </ScrollView>
+        // FlatList is used to display a list of items. It is more efficient
+        than ScrollView. It only renders the items that are visible on the
+        screen.
+        <FlatList
+          data={goals}
+          renderItem={(itemData) => {
+            //console.log(itemData.index);
+            return (
+              <View style={styles.goalListView}>
+                <Text style={styles.goalText}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </View>
   );
