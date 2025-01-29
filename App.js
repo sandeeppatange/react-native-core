@@ -9,8 +9,12 @@ export default function App() {
   const [goals, setGoals] = useState([]);
   const [modelIsVisible, setModelIsVisible] = useState(false);
 
-  function inputModelVisibilityHandler() {
+  function showAddGoalModel() {
     setModelIsVisible(true);
+  }
+
+  function hideAddGoalModel() {
+    setModelIsVisible(false);
   }
 
   function addGoalHandler(enteredGoalText) {
@@ -18,6 +22,7 @@ export default function App() {
       ...currentGoals,
       { text: enteredGoalText, id: Math.random().toString() },
     ]);
+    setModelIsVisible(false);
   }
 
   function deleteGoalHandler(id) {
@@ -28,8 +33,12 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <Button title="Add New Goal" onPress={inputModelVisibilityHandler} />
-      <GoalInput visible={modelIsVisible} onAddGoal={addGoalHandler} />
+      <Button title="Add New Goal" onPress={showAddGoalModel} />
+      <GoalInput
+        visible={modelIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={hideAddGoalModel}
+      />
       <View style={styles.goalContainer}>
         // FlatList is used to display a list of items. It is more efficient
         than ScrollView. It only renders the items that are visible on the
