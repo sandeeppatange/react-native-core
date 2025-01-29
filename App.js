@@ -1,12 +1,17 @@
 // Purpose: Main file for the app. This is the first file that is run when the app is started.
 import { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Button } from "react-native";
 
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 
 export default function App() {
   const [goals, setGoals] = useState([]);
+  const [modelIsVisible, setModelIsVisible] = useState(false);
+
+  function inputModelVisibilityHandler() {
+    setModelIsVisible(true);
+  }
 
   function addGoalHandler(enteredGoalText) {
     setGoals((currentGoals) => [
@@ -23,7 +28,8 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addGoalHandler} />
+      <Button title="Add New Goal" onPress={inputModelVisibilityHandler} />
+      <GoalInput visible={modelIsVisible} onAddGoal={addGoalHandler} />
       <View style={styles.goalContainer}>
         // FlatList is used to display a list of items. It is more efficient
         than ScrollView. It only renders the items that are visible on the
