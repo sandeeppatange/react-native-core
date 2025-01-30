@@ -4,9 +4,9 @@ function GoalItem(props) {
   return (
     <View style={styles.goalListView}>
       <Pressable
-        android_ripple={{ color: "#797979" }}
+        android_ripple={{ color: "#210644" }}
         onPress={props.onDelete.bind(this, props.id)}
-        style={({ pressed }) => pressed && { backgroundColor: "#797979" }} // This presed logic is required for only IOS. for android android_ripple takes care of it.
+        style={({ pressed }) => pressed && styles.pressedItem} // This presed logic is required for only IOS. for android android_ripple takes care of it.
       >
         <Text style={styles.goalText}>{props.text}</Text>
       </Pressable>
@@ -19,7 +19,7 @@ export default GoalItem;
 const styles = StyleSheet.create({
   goalListView: {
     marginVertical: 5,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#5e0acc",
     borderColor: "#cccccc",
     borderWidth: 2,
     borderRadius: 8,
@@ -27,5 +27,10 @@ const styles = StyleSheet.create({
   goalText: {
     fontWeight: "bold",
     padding: 10,
+    color: "white",
+  },
+
+  pressedItem: {
+    opacity: 0.5,
   },
 });
